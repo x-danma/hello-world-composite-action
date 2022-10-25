@@ -1,6 +1,7 @@
 on: [push]
 
-autoBump_tag:
+jobs:
+  autoBump_tag:
     runs-on: ubuntu-latest
     steps:
       # To use this repository's private action,
@@ -18,3 +19,4 @@ autoBump_tag:
       # Use the output from the `createTag` step
       - name: Get the output tag
         run: echo "The tag was ${{ steps.createTag.outputs.newTag }}"
+  
