@@ -4,18 +4,13 @@ jobs:
   autoBump_tag:
     runs-on: ubuntu-latest
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Increment SemVer Patch Version and Tag
-        uses: ./ # Uses an action in the root directory
-        id: createTag
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          repositoryName: ${{ github.event.repository.name }}
-          sha: ${{ github.sha }}
-          repositoryOwner: ${{ github.repository_owner }}
+      - name: createTag
+        uses: actions/increment-semver-patch-and-tag-action@1.2.0
+          with:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            repositoryName: ${{ github.event.repository.name }}
+            repositoryOwner: ${{ github.repository_owner }}
+            sha: ${{ github.sha }}
       # Use the output from the `createTag` step
       - name: Get the output tag
         run: echo "The tag was ${{ steps.createTag.outputs.newTag }}"
