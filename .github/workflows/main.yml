@@ -3,15 +3,16 @@ on: [push]
 jobs:
   autoBump_tag:
     runs-on: ubuntu-latest
+    name: A job to increment tag
     steps:
-      - name: createTag
-        uses: actions/increment-semver-patch-and-tag-action@1.2.0
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            repositoryName: ${{ github.event.repository.name }}
-            repositoryOwner: ${{ github.repository_owner }}
-            sha: ${{ github.sha }}
+      - name: Increment SemVer Patch Version and Tag
+        id: createTag
+        uses: x-danma/increment-semver-patch-and-tag-action@1.2.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repositoryName: ${{ github.event.repository.name }}
+          sha: ${{ github.sha }}
+          repositoryOwner: ${{ github.repository_owner }}
       # Use the output from the `createTag` step
       - name: Get the output tag
-        run: echo "The tag was ${{ steps.createTag.outputs.newTag }}"
-  
+        run: echo "The new tag was ${{ steps.createTag.outputs.newTag }}"
