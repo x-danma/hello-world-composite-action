@@ -1,3 +1,5 @@
+on: [push]
+
 autoBump_tag:
     runs-on: ubuntu-latest
     steps:
